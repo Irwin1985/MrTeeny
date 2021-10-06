@@ -109,6 +109,13 @@ func (l *Lexer) NextToken() token.Token {
 		} else {
 			tok = newToken(token.ASSIGN, "=")
 		}
+	case '!':
+		if l.peek() == rune('=') {
+			l.advance()
+			tok = newToken(token.NEQ, "!=")
+		} else {
+			tok = newToken(token.NOT, "!")
+		}
 	case '+':
 		if l.peek() == rune('=') {
 			l.advance()
@@ -136,6 +143,20 @@ func (l *Lexer) NextToken() token.Token {
 			tok = newToken(token.DIV_EQ, "/=")
 		} else {
 			tok = newToken(token.DIV, "/")
+		}
+	case '<':
+		if l.peek() == rune('=') {
+			l.advance()
+			tok = newToken(token.LEQ, "<=")
+		} else {
+			tok = newToken(token.LT, "<")
+		}
+	case '>':
+		if l.peek() == rune('=') {
+			l.advance()
+			tok = newToken(token.GEQ, ">=")
+		} else {
+			tok = newToken(token.GT, ">=")
 		}
 	case '"':
 		tok = newToken(token.STRING, l.readString())
